@@ -15,9 +15,11 @@ http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/
     <jms:activemq-connector name="Active_MQ"   brokerURL="vm://localhost" validateConnections="true" doc:name="Active MQ"/>
     <flow name="databseFlow">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/" doc:name="HTTP"/>
+        <logger message="Process STarted" level="INFO" doc:name="Logger"/>
         <db:select config-ref="Oracle_Configuration" doc:name="Database">
             <db:parameterized-query><![CDATA[Select * from STUDENT]]></db:parameterized-query>
         </db:select>
+        <logger message="Db excuted" level="INFO" doc:name="Logger"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
         <logger message="#[payload]" level="INFO" doc:name="Logger"/>
         <set-payload value="#[payload]" doc:name="Set Payload"/>
